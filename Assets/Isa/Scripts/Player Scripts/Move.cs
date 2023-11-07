@@ -7,8 +7,8 @@ public class Move : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 2f;
     [SerializeField]
-    private float jumpForce=1.5f;
-    
+    private float jumpForce = 1.5f;
+
     //Sað - Sol sýnýrý almak için.
     public float border;
 
@@ -42,16 +42,16 @@ public class Move : MonoBehaviour
                 transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
             }
         }
-        if (gameManager.isDead == false && IsGrounded ==true) 
+        if (gameManager.isDead == false && IsGrounded == true)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.W))
             {
                 GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 animators.SetBool("IsJump", true);
                 IsGrounded = false; //Havada zýplamaya devam etmemeli.
             }
         }
-        //CheackAnimations();
+  
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -62,17 +62,5 @@ public class Move : MonoBehaviour
             IsGrounded = true;
             animators.SetBool("IsJump", false);
         }
-    }
-    void CheackAnimations()
-    {
-        if (IsGrounded == false)
-        {
-            StartCoroutine(waitJumpAnim());
-        }
-    }
-    IEnumerator waitJumpAnim()
-    {
-        yield return new WaitForSeconds(0.2f);
-        animators.SetBool("IsJump", false);
     }
 }
